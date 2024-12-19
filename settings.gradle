@@ -1,0 +1,8 @@
+rootProject.name = 'cow-vac'
+
+include ':shared'
+project(':shared').projectDir = new File('src/shared')
+
+include ':vac'
+project(':vac').projectDir = new File('src/vac')
+
