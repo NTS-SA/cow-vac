@@ -28,16 +28,17 @@ public class VacunadosDatosGetController extends ApiController {
         super(queryBus, commandBus);
     }
 
-    @GetMapping("/vacunados")
+    @GetMapping("/vacunados/{estPropAnim}/{anho}")
     @ApiOperation(value = "Para  devolver la cantidad de animales terneros/terneras bovino y bubalinos vacunados por propietario/establecimiento del acta confirmada en UZ del periodo general.")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Ok."),
         @ApiResponse(code = 404, message = "Registro no se encuentra."),
         @ApiResponse(code = 401, message = "No esta autorizado para ver el recurso.")})
-    public ResponseEntity<?> index(@ApiParam(value = "Request para obtener cantidad de animales terneros,terneras,bovino y bubalinos vacunados por propietario/establecimiento.") @RequestBody VacunadosDatosGetRequest request) {
-        logger.info("cantidad de animales terneros,terneras,bovino y bubalinos vacunados por propietario/establecimiento: " + request.getEstPropAnimId());
+    public ResponseEntity<?> index(@ApiParam(value = "EstPropAnimId", required = true) @PathVariable Long estPropAnim,
+                                   @ApiParam(value = "Año", required = true) @PathVariable Integer anho) {
+        logger.info("cantidad de animales terneros,terneras,bovino y bubalinos vacunados por propietario/establecimiento: " + estPropAnim);
         try {
-            InfoVacunados response = ask(new VacunadosDatosFind(request.getEstPropAnimId(), request.getAnho()));
+            InfoVacunados response = ask(new VacunadosDatosFind(estPropAnim, anho));
             return ResponseEntity.ok(response);
         }catch (QueryHandlerExecutionError e) {
             if (e.getCause() instanceof LeerVacunadosExcepcion) {
