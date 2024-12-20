@@ -28,14 +28,15 @@ public class VacunadosDatosGetController extends ApiController {
         super(queryBus, commandBus);
     }
 
-    @GetMapping("/vacunados/{estPropAnim}/{anho}")
+    @GetMapping("/vacunados")
     @ApiOperation(value = "Para  devolver la cantidad de animales terneros/terneras bovino y bubalinos vacunados por propietario/establecimiento del acta confirmada en UZ del periodo general.")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Ok."),
         @ApiResponse(code = 404, message = "Registro no se encuentra."),
         @ApiResponse(code = 401, message = "No esta autorizado para ver el recurso.")})
-    public ResponseEntity<?> index(@ApiParam(value = "EstPropAnimId", required = true) @PathVariable Long estPropAnim,
-                                   @ApiParam(value = "Año", required = true) @PathVariable Integer anho) {
+    public ResponseEntity<?> index(
+        @ApiParam(value = "Identificador unico del SIGOR que asocia al propietario con un establecimiento", required = true) @RequestParam(value = "estPropAnim") Long estPropAnim,
+        @ApiParam(value = "Año", required = true) @RequestParam(value = "anho") Integer anho) {
         logger.info("cantidad de animales terneros,terneras,bovino y bubalinos vacunados por propietario/establecimiento: " + estPropAnim);
         try {
             InfoVacunados response = ask(new VacunadosDatosFind(estPropAnim, anho));
