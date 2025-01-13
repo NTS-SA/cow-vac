@@ -16,7 +16,8 @@ public class VacunadosDatosFindHandler implements QueryHandler<VacunadosDatosFin
     @Override
     public InfoVacunados handle(VacunadosDatosFind query) {
         try {
-            return repository.obtenerAnimalesVacunados(query);
+            Long periodoId = repository.obtenerPrimerPeriodoAnho(query.getAnho());
+            return repository.obtenerAnimalesVacunados(query, periodoId);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

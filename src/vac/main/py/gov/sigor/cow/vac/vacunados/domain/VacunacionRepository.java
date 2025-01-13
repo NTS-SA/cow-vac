@@ -7,6 +7,8 @@ public interface VacunacionRepository {
 
     <T> T getEntityBean(Class<T> entityClass, Long id);
 
-    InfoVacunados obtenerAnimalesVacunados(VacunadosDatosFind query);
+    InfoVacunados obtenerAnimalesVacunados(VacunadosDatosFind query, Long vacPeriodoId);
+
+    Long obtenerPrimerPeriodoAnho(Integer anho);
 }
 

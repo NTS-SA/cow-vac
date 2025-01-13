@@ -28,7 +28,7 @@ public class JpaVacunacionRepository implements VacunacionRepository {
     }
 
     @Override
-    public InfoVacunados obtenerAnimalesVacunados(VacunadosDatosFind query) {
+    public InfoVacunados obtenerAnimalesVacunados(VacunadosDatosFind query, Long vacPeriodoId) {
         InfoVacunados vacunados = new InfoVacunados();
 
         Query q = em.createQuery(
@@ -39,17 +39,17 @@ public class JpaVacunacionRepository implements VacunacionRepository {
             "FROM UCsaAftosa csaAftosa " +
             "JOIN csaAftosa.vacAftosa vacAftosa " +
             "JOIN UCsaAftosaPob csaAftosaPob on csaAftosaPob.csaAftosa = csaAftosa " +
-            "WHERE vacAftosa.anho = :anho " +
-            "AND csaAftosa.estPropAnimId = :estPropAnimId " +
+            "WHERE csaAftosa.estPropAnimId = :estPropAnimId " +
+            "AND csaAftosa.vacPeriodoId = :vacPeriodoId " +
             "AND csaAftosaPob.espCategoriaId IN :categorias " +
             "AND vacAftosa.vacDocEstadoId = :estadoVacDoc " +
             "GROUP BY csaAftosaPob.espCategoriaId, csaAftosaPob.espCategoriaNombre " +
             "ORDER BY csaAftosaPob.espCategoriaId"
         );
 
-        q.setParameter("anho", query.getAnho());
         q.setParameter("estPropAnimId", query.getEstPropAnimId());
-        q.setParameter("categorias", Arrays.asList(5L, 6L,7L, 10L));
+        q.setParameter("vacPeriodoId", vacPeriodoId);
+        q.setParameter("categorias", Arrays.asList(7L, 10L, 17L, 18L));
         q.setParameter("estadoVacDoc", 2);
 
         List<Object[]> lista = (List<Object[]>) q.getResultList();
@@ -69,6 +69,24 @@ public class JpaVacunacionRepository implements VacunacionRepository {
 
 
         return vacunados;
+    }
+
+    @Override
+    public Long obtenerPrimerPeriodoAnho(Integer anho) {
+        Query query = em.createQuery(
+            "SELECT MIN(v.vacPeriodoId) " +
+                "FROM UVacPeriodo v " +
+                "WHERE YEAR(v.fechaIni) = :year"
+        );
+
+        query.setParameter("year", anho);
+        List<Long> result = query.getResultList();
+
+        if (!result.isEmpty() && result.get(0) != null) {
+            return result.get(0);
+        } else {
+            throw new LeerVacunadosExcepcion("No se puede obtener el primer periodo del año " + anho);
+        }
     }
 
 }
