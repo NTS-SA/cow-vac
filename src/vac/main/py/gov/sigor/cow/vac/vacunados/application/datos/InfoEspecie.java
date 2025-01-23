@@ -10,10 +10,13 @@ public class InfoEspecie implements Response {
 
     Long cantVacunada;
 
+    Long cantExistente;
+
     public InfoEspecie() {
         espCatogoriaId = 0l;
         nombre = "";
         cantVacunada = 0l;
+        cantExistente = 0l;
     }
 
     public Long getEspCatogoriaId() {
@@ -38,5 +41,13 @@ public class InfoEspecie implements Response {
 
     public void setCantVacunada(Long cantVacunada) {
         this.cantVacunada = cantVacunada;
+    }
+
+    public Long getCantExistente() {
+        return cantExistente;
+    }
+
+    public void setCantExistente(Long cantExistente) {
+        this.cantExistente = cantExistente;
     }
 }

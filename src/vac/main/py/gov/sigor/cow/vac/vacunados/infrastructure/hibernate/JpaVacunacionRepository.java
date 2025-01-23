@@ -34,6 +34,7 @@ public class JpaVacunacionRepository implements VacunacionRepository {
         Query q = em.createQuery(
             "SELECT " +
                 "SUM( CASE WHEN csaAftosaPob.vacunada IS NULL THEN 0 ELSE csaAftosaPob.vacunada END ), " +
+                "SUM( CASE WHEN csaAftosaPob.existente IS NULL THEN 0 ELSE csaAftosaPob.existente END ), " +
                 "csaAftosaPob.espCategoriaNombre, " +
                 "csaAftosaPob.espCategoriaId " +
             "FROM UCsaAftosa csaAftosa " +
@@ -62,8 +63,9 @@ public class JpaVacunacionRepository implements VacunacionRepository {
         for (Object[] obj : lista) {
             InfoEspecie infoEspecie = new InfoEspecie();
             infoEspecie.setCantVacunada( (Long) obj[0] );
-            infoEspecie.setNombre((String) obj[1]);
-            infoEspecie.setEspCatogoriaId( (Long) obj[2] );
+            infoEspecie.setCantExistente( (Long) obj[1] );
+            infoEspecie.setNombre((String) obj[2]);
+            infoEspecie.setEspCatogoriaId( (Long) obj[3] );
             vacunados.getEspecies().add(infoEspecie);
         }
 
