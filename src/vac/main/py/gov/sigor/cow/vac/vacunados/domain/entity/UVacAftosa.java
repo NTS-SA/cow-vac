@@ -18,6 +18,9 @@ public class UVacAftosa extends Auditable {
     @Column(name = "VAC_DOC_ESTADO_ID")
     private Integer vacDocEstadoId;
 
+    @Column(name = "ELIMINADO")
+    private String eliminado;
+
     public Long getVacAftosaId() {
         return vacAftosaId;
     }
@@ -41,4 +44,8 @@ public class UVacAftosa extends Auditable {
     public void setVacDocEstadoId(Integer vacDocEstadoId) {
         this.vacDocEstadoId = vacDocEstadoId;
     }
+
+    public String getEliminado() {return eliminado;}
+
+    public void setEliminado(String eliminado) {this.eliminado = eliminado;}
 }
