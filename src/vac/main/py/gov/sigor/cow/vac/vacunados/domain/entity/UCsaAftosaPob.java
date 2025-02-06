@@ -24,6 +24,9 @@ public class UCsaAftosaPob extends Auditable {
     @Column(name = "EXISTENTE")
     private Integer existente;
 
+    @Column(name = "ANHO")
+    private Integer anho;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="CSA_AFTOSA_ID")
     private UCsaAftosa csaAftosa;
@@ -68,11 +71,13 @@ public class UCsaAftosaPob extends Auditable {
         this.csaAftosa = csaAftosa;
     }
 
-    public Integer getExistente() {
-        return existente;
-    }
+    public Integer getExistente() {return existente;}
 
     public void setExistente(Integer existente) {
         this.existente = existente;
     }
+
+    public Integer getAnho() {return anho;}
+
+    public void setAnho(Integer anho) {this.anho = anho;}
 }
