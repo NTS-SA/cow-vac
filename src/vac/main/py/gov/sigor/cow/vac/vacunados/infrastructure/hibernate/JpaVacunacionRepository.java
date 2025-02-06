@@ -44,6 +44,7 @@ public class JpaVacunacionRepository implements VacunacionRepository {
             "AND csaAftosa.vacPeriodoId = :vacPeriodoId " +
             "AND csaAftosaPob.espCategoriaId IN :categorias " +
             "AND vacAftosa.vacDocEstadoId IN :estadoVacDoc " +
+            "AND vacAftosa.eliminado = :eliminado " +
             "GROUP BY csaAftosaPob.espCategoriaId, csaAftosaPob.espCategoriaNombre " +
             "ORDER BY csaAftosaPob.espCategoriaId"
         );
@@ -51,7 +52,8 @@ public class JpaVacunacionRepository implements VacunacionRepository {
         q.setParameter("estPropAnimId", query.getEstPropAnimId());
         q.setParameter("vacPeriodoId", vacPeriodoId);
         q.setParameter("categorias", Arrays.asList(7L, 10L, 17L, 18L));
-        q.setParameter("estadoVacDoc", Arrays.asList(2L, 9L));
+        q.setParameter("estadoVacDoc", Arrays.asList(2, 8));
+        q.setParameter("eliminado", "N");
 
         List<Object[]> lista = (List<Object[]>) q.getResultList();
 
