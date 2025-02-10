@@ -57,7 +57,7 @@ public class JpaVacunacionRepository implements VacunacionRepository {
         q.setParameter("estPropAnimId", query.getEstPropAnimId());
         q.setParameter("vacPeriodoId", vacPeriodoId);
         q.setParameter("categorias", Arrays.asList(7L, 10L, 17L, 18L));
-        q.setParameter("estadoVacDoc", Arrays.asList(2, 8));
+        q.setParameter("estadoVacDoc", Arrays.asList(2, 8, 7));
         q.setParameter("eliminado", "N");
 
         List<Object[]> lista = (List<Object[]>) q.getResultList();
